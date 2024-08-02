@@ -10,6 +10,8 @@ import { ClassComponent } from './class/class.component';
 import { SupportComponent } from './support/support.component';
 import { routes } from './app.routes';
 import { InstructorComponent } from './instructor/instructor.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { InstructorComponent } from './instructor/instructor.component';
     ClassroomComponent,
     TeacherComponent,
     ClassComponent,
-    SupportComponent
+    SupportComponent,
+    SignInComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
