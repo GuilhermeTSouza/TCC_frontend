@@ -9,11 +9,13 @@ import { TeacherComponent } from './teacher/teacher.component';
 import { ClassComponent } from './class/class.component';
 import { SupportComponent } from './support/support.component';
 import { routes } from './app.routes';
+import { InstructorComponent } from './instructor/instructor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IntroductionComponent,
+    InstructorComponent,
     CoursesComponent,
     ClassroomComponent,
     TeacherComponent,

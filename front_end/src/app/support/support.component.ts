@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-support',
-  template: `<h1>Welcome to Support</h1>`,
+  standalone: true,
+  imports: [],
+  templateUrl: './support.component.html',
   styleUrl: './support.component.css'
 })
 export class SupportComponent { }

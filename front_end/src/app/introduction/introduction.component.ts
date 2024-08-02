@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-introduction',
-  template: `<h1>Introdução</h1>`,
+  standalone: true,
+  imports: [],
+  templateUrl: './introduction.component.html',
   styleUrl: './introduction.component.css'
 })
 export class IntroductionComponent { }

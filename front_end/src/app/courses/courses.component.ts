@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-courses',
-  template: `<h1>Welcome to Courses</h1>`,
-  styles: []
+  standalone: true,
+  imports: [],
+  templateUrl: './courses.component.html',
+  styleUrl: './courses.component.css'
 })
 export class CoursesComponent { }
