@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-sign-in',
@@ -8,5 +9,11 @@ import { Component } from '@angular/core';
   styleUrl: './sign-in.component.css'
 })
 export class SignInComponent {
+  constructor(
+    private location: Location
+  ) {}
 
+  goBack(): void {
+    this.location.back();
+  }
 }

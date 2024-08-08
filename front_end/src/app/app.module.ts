@@ -2,33 +2,41 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { IntroductionComponent } from './introduction/introduction.component';
-import { CoursesComponent } from './courses/courses.component';
-import { ClassroomComponent } from './classroom/classroom.component';
-import { TeacherComponent } from './teacher/teacher.component';
-import { ClassComponent } from './class/class.component';
-import { SupportComponent } from './support/support.component';
-import { routes } from './app.routes';
-import { InstructorComponent } from './instructor/instructor.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { TeacherComponent } from './teacher/teacher.component';
+import { ClassComponent } from './class/class.component';
+import { ClassroomComponent } from './classroom/classroom.component';
+import { InstructorComponent } from './instructor/instructor.component';
+import { IntroductionComponent } from './introduction/introduction.component';
+import { routes } from './app.routes';
+import { MainLayoutComponent } from './layouts/main/main.component';
+import { AuthLayoutComponent } from './layouts/auth/auth.component';
+import { CoursesComponent } from './courses/courses.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    IntroductionComponent,
-    InstructorComponent,
-    CoursesComponent,
-    ClassroomComponent,
+    HeaderComponent,
+    FooterComponent,
+    SidebarComponent,
+    MainLayoutComponent,
+    AuthLayoutComponent,
+    SignInComponent,
+    SignUpComponent,
     TeacherComponent,
     ClassComponent,
-    SupportComponent,
-    SignInComponent,
-    SignUpComponent
+    ClassroomComponent,
+    CoursesComponent,
+    InstructorComponent,
+    IntroductionComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes)  // Importa as rotas
+    RouterModule.forRoot(routes),
   ],
   providers: [],
   bootstrap: [AppComponent]
