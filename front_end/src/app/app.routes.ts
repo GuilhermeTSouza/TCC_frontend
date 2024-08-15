@@ -23,6 +23,7 @@ export const routes: Routes = [
       { path: 'course', component: CoursesComponent },
       { path: 'instructor', component: InstructorComponent },
       { path: 'support', component: SupportComponent },
+      { path: '', redirectTo: '/introduction', pathMatch: 'full' },
     ],
   },
   {
@@ -31,6 +32,7 @@ export const routes: Routes = [
     children: [
       { path: 'sign-in', component: SignInComponent },
       { path: 'sign-up', component: SignUpComponent },
+      { path: '', redirectTo: '/sign-up', pathMatch: 'full' },
     ],
   },
 ];
