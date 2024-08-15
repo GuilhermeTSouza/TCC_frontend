@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -32,13 +33,10 @@ import { CoursesComponent } from './courses/courses.component';
     ClassroomComponent,
     CoursesComponent,
     InstructorComponent,
-    IntroductionComponent
+    IntroductionComponent,
   ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(routes),
-  ],
+  imports: [BrowserModule, RouterModule.forRoot(routes)],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

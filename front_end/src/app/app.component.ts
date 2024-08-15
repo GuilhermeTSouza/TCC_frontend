@@ -6,12 +6,13 @@ import { Router, RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   constructor(private router: Router) {}
 
   title = 'front_end';
+  logado = false;
 
   abrirPaginaSignIn() {
     const url = `/signin`;
@@ -22,7 +23,7 @@ export class AppComponent {
     const url = `/signup`;
     this.router.navigate([url]);
   }
-  
+
   abrirPaginaIntroduction() {
     const url = `/introduction`;
     this.router.navigate([url]);

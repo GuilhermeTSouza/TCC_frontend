@@ -1,47 +1,84 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SignInService } from '../services/sign-in.service';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent {
-  constructor(private router: Router) {}
-  
+  constructor(private router: Router, private signInService: SignInService) {}
+
   abrirPaginaIntroduction() {
-    const url = `/introduction`;
+    const url = '/introduction';
     this.router.navigate([url]);
   }
 
   abrirPaginaCourse() {
-    const url = `/course`;
+    let url = '/';
+    if (this.signInService.logado) {
+      url = '/course';
+    } else {
+      alert('Você precisa estar logado para continuar');
+      url = '/auth/sign-in';
+    }
     this.router.navigate([url]);
   }
 
   abrirPaginaClassroom() {
-    const url = `/classroom`;
+    let url = '/';
+    if (this.signInService.logado) {
+      url = '/classroom';
+    } else {
+      alert('Você precisa estar logado para continuar');
+      url = '/auth/sign-in';
+    }
     this.router.navigate([url]);
   }
 
   abrirPaginaInstructor() {
-    const url = `/instructor`;
+    let url = '/';
+    if (this.signInService.logado) {
+      url = '/instructor';
+    } else {
+      alert('Você precisa estar logado para continuar');
+      url = '/auth/sign-in';
+    }
     this.router.navigate([url]);
   }
 
   abrirPaginaTeacher() {
-    const url = `/teacher`;
+    let url = '/';
+    if (this.signInService.logado) {
+      url = '/teacher';
+    } else {
+      alert('Você precisa estar logado para continuar');
+      url = '/auth/sign-in';
+    }
     this.router.navigate([url]);
   }
 
   abrirPaginaClass() {
-    const url = `/class`;
+    let url = '/';
+    if (this.signInService.logado) {
+      url = '/class';
+    } else {
+      alert('Você precisa estar logado para continuar');
+      url = '/auth/sign-in';
+    }
     this.router.navigate([url]);
   }
 
   abrirPaginaSupport() {
-    const url = `/support`;
+    let url = '/';
+    if (this.signInService.logado) {
+      url = '/support';
+    } else {
+      alert('Você precisa estar logado para continuar');
+      url = '/auth/sign-in';
+    }
     this.router.navigate([url]);
   }
 }

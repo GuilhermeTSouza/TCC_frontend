@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-interface Curso {
-  id: number;
-  nome: string;
-}
+import { CourseService } from '../services/course.service';
+import { Course } from '../models/course';
 
 @Component({
   selector: 'app-courses',
@@ -15,14 +12,20 @@ interface Curso {
   styleUrls: ['./courses.component.css'],
 })
 export class CoursesComponent {
-  cursos: Curso[] = [];
-  cursoSelecionado: Curso | null = null;
+  cursos: Course[] = [];
+  cursoSelecionado: Course | null = null;
   exibirModal = false;
   cursoNome = '';
 
-  abrirModal(curso?: Curso) {
+  constructor(private courseService: CourseService) {
+    this.courseService.getAllCourses().subscribe((courses) => {
+      this.cursos = courses;
+    });
+  }
+
+  abrirModal(curso?: Course) {
     this.cursoSelecionado = curso || null;
-    this.cursoNome = curso ? curso.nome : '';
+    this.cursoNome = curso ? curso.name : '';
     this.exibirModal = true;
   }
 
@@ -35,11 +38,11 @@ export class CoursesComponent {
   salvarCurso() {
     if (this.cursoNome.trim()) {
       if (this.cursoSelecionado) {
-        this.cursoSelecionado.nome = this.cursoNome.trim();
+        this.cursoSelecionado.name = this.cursoNome.trim();
       } else {
-        const novoCurso: Curso = {
+        const novoCurso: Course = {
           id: this.cursos.length + 1,
-          nome: this.cursoNome.trim(),
+          name: this.cursoNome.trim(),
         };
         this.cursos.push(novoCurso);
       }
@@ -47,11 +50,11 @@ export class CoursesComponent {
     }
   }
 
-  selecionarCurso(curso: Curso) {
+  selecionarCurso(curso: Course) {
     this.cursoSelecionado = curso;
   }
 
-  editarCurso(curso?: Curso) {
+  editarCurso(curso?: Course) {
     this.abrirModal(curso);
   }
 }
