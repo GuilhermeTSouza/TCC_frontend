@@ -1,0 +1,10 @@
+services: 
+- type: web
+name: tcc_frontend
+env: static
+staticPublishPath: dist/front_end
+buildCommand: npm run build
+routes:
+- type: rewrite
+ source: /*
+ destination: /index.html
