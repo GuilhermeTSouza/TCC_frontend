@@ -1,0 +1,8 @@
+server {
+    listen 80;
+    tcc_frontend https://tcc-frontend-mj6j.onrender.com;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
