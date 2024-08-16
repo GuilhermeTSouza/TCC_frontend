@@ -54,4 +54,9 @@ export class SignUpComponent {
     alert('Conta criada com sucesso!');
     this.errorMessage = null;
   }
+
+  abrirPaginaSignIn() {
+    const url = "/auth/sign-in"
+    this.router.navigate([url]);
+  }
 }

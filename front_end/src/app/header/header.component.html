@@ -5,12 +5,16 @@
       <img src="logotipo_branca.png" alt="Logo" width="150vw" height="auto" />
     </a>
     <div class="flex items-center space-x-4">
+      <!-- Exibir ícone de usuário apenas se logado -->
       <div
-        class="w-11 h-11 bg-green-500 rounded-full flex items-center justify-center text-white text-lg font-bold"
+        *ngIf="isLoggedIn"
+        class="w-11 h-11 bg-green-800 rounded-full flex items-center justify-center text-white text-lg font-bold"
       >
         {{ userInitial }}
       </div>
+      <!-- Exibir links de login e registro apenas se não logado -->
       <a
+        *ngIf="!isLoggedIn"
         class="text-white flex items-center no-underline cursor-pointer"
         (click)="abrirPaginaSignIn()"
       >
@@ -19,6 +23,7 @@
         Entrar
       </a>
       <a
+        *ngIf="!isLoggedIn"
         class="text-white flex items-center no-underline cursor-pointer"
         (click)="abrirPaginaSignUp()"
       >

@@ -44,4 +44,9 @@ export class SignInComponent {
       alert('Usuário não encontrado. Por favor, cadastre-se.');
     }
   }
+
+  abrirPaginaSignUp() {
+    const url = "/auth/sign-up"
+    this.router.navigate([url]);
+  }
 }
