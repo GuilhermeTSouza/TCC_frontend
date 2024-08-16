@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  userInitial: string = '';
   title = 'front_end';
   currentTheme: string = 'light';
 
@@ -15,6 +16,13 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTheme();
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      if (parsedUser.username) {
+        this.userInitial = parsedUser.username.charAt(0).toUpperCase();
+      }
+    }
   }
 
   loadTheme(): void {
@@ -43,12 +51,12 @@ export class HeaderComponent implements OnInit {
   }
 
   abrirPaginaSignIn(): void {
-    const url = `/auth/sign-in`;
+    const url = '/auth/sign-in';
     this.router.navigate([url]);
   }
 
   abrirPaginaSignUp(): void {
-    const url = `/auth/sign-up`;
+    const url = '/auth/sign-up';
     this.router.navigate([url]);
   }
 }
