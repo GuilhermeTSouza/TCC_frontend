@@ -1,13 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-interface Instrutor {
-  id: number;
-  nome: string;
-  email: string;
-  area: string;
-}
+import { InstructorService } from '../services/instructor.service';
+import { Instructor } from '../models/instructor';
 
 @Component({
   selector: 'app-instructor',
@@ -17,16 +12,22 @@ interface Instrutor {
   styleUrls: ['./instructor.component.css'],
 })
 export class InstructorComponent {
-  instrutores: Instrutor[] = [];
-  instrutorSelecionado: Instrutor | null = null;
+  instrutores: Instructor[] = [];
+  instrutorSelecionado: Instructor | null = null;
   exibirModal = false;
   instrutorNome = '';
   instrutorEmail = '';
   instrutorArea = '';
 
-  abrirModal(instrutor?: Instrutor | null) {
+  constructor(private instructorService: InstructorService) {
+    this.instructorService.getAllInstructors().subscribe((instructors) => {
+      this.instrutores = instructors;
+    });
+  }
+
+  abrirModal(instrutor?: Instructor | null) {
     this.instrutorSelecionado = instrutor || null;
-    this.instrutorNome = instrutor ? instrutor.nome : '';
+    this.instrutorNome = instrutor ? instrutor.name : '';
     this.instrutorEmail = instrutor ? instrutor.email : '';
     this.instrutorArea = instrutor ? instrutor.area : '';
     this.exibirModal = true;
@@ -51,13 +52,13 @@ export class InstructorComponent {
       this.instrutorArea.trim()
     ) {
       if (this.instrutorSelecionado) {
-        this.instrutorSelecionado.nome = this.instrutorNome.trim();
+        this.instrutorSelecionado.name = this.instrutorNome.trim();
         this.instrutorSelecionado.email = this.instrutorEmail.trim();
         this.instrutorSelecionado.area = this.instrutorArea.trim();
       } else {
-        const novoInstrutor: Instrutor = {
+        const novoInstrutor: Instructor = {
           id: this.instrutores.length + 1,
-          nome: this.instrutorNome.trim(),
+          name: this.instrutorNome.trim(),
           email: this.instrutorEmail.trim(),
           area: this.instrutorArea.trim(),
         };
@@ -69,7 +70,7 @@ export class InstructorComponent {
     }
   }
 
-  selecionarInstrutor(instrutor: Instrutor) {
-    this.instrutorSelecionado = instrutor;
+  selecionarInstrutor(instrutor: Instructor) {
+    this.abrirModal(instrutor);
   }
 }

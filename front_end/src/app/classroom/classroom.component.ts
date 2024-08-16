@@ -1,13 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-interface Sala {
-  id: number;
-  numero: number; // Alterado para número
-  capacidade: number;
-  possuiComputador: boolean;
-}
+import { ClassroomService } from '../services/classroom.service';
+import { Classroom } from '../models/classroom';
 
 @Component({
   selector: 'app-classroom',
@@ -17,18 +12,24 @@ interface Sala {
   styleUrls: ['./classroom.component.css'],
 })
 export class ClassroomComponent {
-  salas: Sala[] = [];
-  salaSelecionada: Sala | null = null;
+  salas: Classroom[] = [];
+  salaSelecionada: Classroom | null = null;
   exibirModal = false;
-  salaNumero = 1; // Valor inicial como número positivo
-  salaCapacidade = 1; // Valor inicial positivo
+  salaNumero = 1;
+  salaCapacidade = 1;
   salaPossuiComputador = false;
 
-  abrirModal(sala?: Sala | null) {
-    this.salaSelecionada = sala || null;
-    this.salaNumero = sala ? sala.numero : 1; // Valor inicial positivo
-    this.salaCapacidade = sala ? sala.capacidade : 1; // Valor inicial positivo
-    this.salaPossuiComputador = sala ? sala.possuiComputador : false;
+  constructor(private classroomService: ClassroomService) {
+    this.classroomService.getAllClassrooms().subscribe((classrooms) => {
+      this.salas = classrooms;
+    });
+  }
+
+  abrirModal(classroom?: Classroom | null) {
+    this.salaSelecionada = classroom || null;
+    this.salaNumero = classroom ? classroom.number_classroom : 1;
+    this.salaCapacidade = classroom ? classroom.capacity : 1;
+    this.salaPossuiComputador = classroom ? classroom.computer : false;
     this.exibirModal = true;
   }
 
@@ -38,8 +39,8 @@ export class ClassroomComponent {
   }
 
   resetarFormulario() {
-    this.salaNumero = 1; // Valor inicial positivo
-    this.salaCapacidade = 1; // Valor inicial positivo
+    this.salaNumero = 1;
+    this.salaCapacidade = 1;
     this.salaPossuiComputador = false;
     this.salaSelecionada = null;
   }
@@ -47,15 +48,15 @@ export class ClassroomComponent {
   salvarSala() {
     if (this.salaNumero > 0 && this.salaCapacidade > 0) {
       if (this.salaSelecionada) {
-        this.salaSelecionada.numero = this.salaNumero;
-        this.salaSelecionada.capacidade = this.salaCapacidade;
-        this.salaSelecionada.possuiComputador = this.salaPossuiComputador;
+        this.salaSelecionada.number_classroom = this.salaNumero;
+        this.salaSelecionada.capacity = this.salaCapacidade;
+        this.salaSelecionada.computer = this.salaPossuiComputador;
       } else {
-        const novaSala: Sala = {
+        const novaSala: Classroom = {
           id: this.salas.length + 1,
-          numero: this.salaNumero,
-          capacidade: this.salaCapacidade,
-          possuiComputador: this.salaPossuiComputador,
+          number_classroom: this.salaNumero,
+          capacity: this.salaCapacidade,
+          computer: this.salaPossuiComputador,
         };
         this.salas.push(novaSala);
       }
@@ -65,7 +66,7 @@ export class ClassroomComponent {
     }
   }
 
-  selecionarSala(sala: Sala) {
-    this.salaSelecionada = sala;
+  selecionarSala(sala: Classroom) {
+    this.abrirModal(sala);
   }
 }

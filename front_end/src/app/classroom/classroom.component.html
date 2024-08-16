@@ -37,9 +37,9 @@
           [class.bg-blue-50]="sala === salaSelecionada"
           (click)="selecionarSala(sala)"
         >
-          <td class="py-4 px-6">{{ sala.numero }}</td>
-          <td class="py-4 px-6">{{ sala.capacidade }}</td>
-          <td class="py-4 px-6">{{ sala.possuiComputador ? "Sim" : "Não" }}</td>
+          <td class="py-4 px-6">{{ sala.number_classroom }}</td>
+          <td class="py-4 px-6">{{ sala.capacity }}</td>
+          <td class="py-4 px-6">{{ sala.computer ? "Sim" : "Não" }}</td>
           <td class="py-4 px-6">
             <button
               class="text-blue-600 hover:text-blue-800"

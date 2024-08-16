@@ -1,32 +1,33 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-interface Docente {
-  id: number;
-  nome: string;
-  email: string;
-  area: string;
-}
+import { TeacherService } from '../services/teacher.service';
+import { Teacher } from '../models/teacher';
 
 @Component({
   selector: 'app-teacher',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './teacher.component.html',
-  styleUrl: './teacher.component.css',
+  styleUrls: ['./teacher.component.css'], // Correção do nome da propriedade
 })
 export class TeacherComponent {
-  docentes: Docente[] = [];
-  docenteSelecionado: Docente | null = null;
+  docentes: Teacher[] = [];
+  docenteSelecionado: Teacher | null = null;
   exibirModal = false;
   docenteNome = '';
   docenteEmail = '';
   docenteArea = '';
 
-  abrirModal(docente?: Docente | null) {
+  constructor(private teacherService: TeacherService) {
+    this.teacherService.getAllTeachers().subscribe((teachers) => {
+      this.docentes = teachers;
+    });
+  }
+
+  abrirModal(docente?: Teacher | null) {
     this.docenteSelecionado = docente || null;
-    this.docenteNome = docente ? docente.nome : '';
+    this.docenteNome = docente ? docente.name : '';
     this.docenteEmail = docente ? docente.email : '';
     this.docenteArea = docente ? docente.area : '';
     this.exibirModal = true;
@@ -51,13 +52,13 @@ export class TeacherComponent {
       this.docenteArea.trim()
     ) {
       if (this.docenteSelecionado) {
-        this.docenteSelecionado.nome = this.docenteNome.trim();
+        this.docenteSelecionado.name = this.docenteNome.trim();
         this.docenteSelecionado.email = this.docenteEmail.trim();
         this.docenteSelecionado.area = this.docenteArea.trim();
       } else {
-        const novoDocente: Docente = {
+        const novoDocente: Teacher = {
           id: this.docentes.length + 1,
-          nome: this.docenteNome.trim(),
+          name: this.docenteNome.trim(),
           email: this.docenteEmail.trim(),
           area: this.docenteArea.trim(),
         };
@@ -69,7 +70,7 @@ export class TeacherComponent {
     }
   }
 
-  selecionarDocente(docente: Docente) {
-    this.docenteSelecionado = docente;
+  selecionarDocente(docente: Teacher) {
+    this.abrirModal(docente);
   }
 }
