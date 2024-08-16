@@ -9,6 +9,4 @@ import { SignInComponent } from '../../sign-in/sign-in.component';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css'],
 })
-export class AuthLayoutComponent {
-  logado = true;
-}
+export class AuthLayoutComponent {}

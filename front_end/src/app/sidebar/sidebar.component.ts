@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { SignInService } from '../services/sign-in.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,7 +9,7 @@ import { SignInService } from '../services/sign-in.service';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent {
-  constructor(private router: Router, private signInService: SignInService) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   abrirPaginaIntroduction() {
     const url = '/introduction';
@@ -18,7 +18,7 @@ export class SidebarComponent {
 
   abrirPaginaCourse() {
     let url = '/';
-    if (this.signInService.logado) {
+    if (this.authService.logado) {
       url = '/course';
     } else {
       alert('Você precisa estar logado para continuar');
@@ -29,7 +29,7 @@ export class SidebarComponent {
 
   abrirPaginaClassroom() {
     let url = '/';
-    if (this.signInService.logado) {
+    if (this.authService.logado) {
       url = '/classroom';
     } else {
       alert('Você precisa estar logado para continuar');
@@ -40,7 +40,7 @@ export class SidebarComponent {
 
   abrirPaginaInstructor() {
     let url = '/';
-    if (this.signInService.logado) {
+    if (this.authService.logado) {
       url = '/instructor';
     } else {
       alert('Você precisa estar logado para continuar');
@@ -51,7 +51,7 @@ export class SidebarComponent {
 
   abrirPaginaTeacher() {
     let url = '/';
-    if (this.signInService.logado) {
+    if (this.authService.logado) {
       url = '/teacher';
     } else {
       alert('Você precisa estar logado para continuar');
@@ -62,7 +62,7 @@ export class SidebarComponent {
 
   abrirPaginaClass() {
     let url = '/';
-    if (this.signInService.logado) {
+    if (this.authService.logado) {
       url = '/class';
     } else {
       alert('Você precisa estar logado para continuar');
@@ -73,7 +73,7 @@ export class SidebarComponent {
 
   abrirPaginaSupport() {
     let url = '/';
-    if (this.signInService.logado) {
+    if (this.authService.logado) {
       url = '/support';
     } else {
       alert('Você precisa estar logado para continuar');

@@ -1,20 +1,24 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { SignInService } from '../services/sign-in.service';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms'; // Importa o FormsModule
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [],
   templateUrl: './sign-in.component.html',
-  styleUrl: './sign-in.component.css',
+  styleUrls: ['./sign-in.component.css'],
+  imports: [FormsModule], // Adiciona FormsModule nas imports
 })
 export class SignInComponent {
+  username: string = '';
+  password: string = '';
+
   constructor(
     private router: Router,
     private location: Location,
-    private signInService: SignInService
+    private authService: AuthService
   ) {}
 
   goBack(): void {
@@ -22,9 +26,22 @@ export class SignInComponent {
   }
 
   logar() {
-    this.signInService.logado = true;
-    console.log(this.signInService.logado);
-    const url = `/introduction`;
-    this.router.navigate([url]);
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      if (
+        this.username === parsedUser.username &&
+        this.password === parsedUser.password
+      ) {
+        this.authService.logado = true;
+        console.log(this.authService.logado);
+        const url = `/introduction`;
+        this.router.navigate([url]);
+      } else {
+        alert('Nome de usuário ou senha incorretos.');
+      }
+    } else {
+      alert('Usuário não encontrado. Por favor, cadastre-se.');
+    }
   }
 }
