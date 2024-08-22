@@ -71,6 +71,13 @@ export class TeacherComponent {
   }
 
   selecionarDocente(docente: Teacher) {
-    this.abrirModal(docente);
+    this.docenteSelecionado = docente;
+  }
+
+  excluirDocente(docente: any) {
+    const confirmacao = confirm(`Tem certeza de que deseja excluir o docente ${docente.name}?`);
+    if (confirmacao) {
+      this.docentes = this.docentes.filter(i => i !== docente);
+    }
   }
 }

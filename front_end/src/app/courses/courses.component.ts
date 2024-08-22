@@ -54,7 +54,10 @@ export class CoursesComponent {
     this.cursoSelecionado = curso;
   }
 
-  editarCurso(curso?: Course) {
-    this.abrirModal(curso);
+  excluirCurso(curso: any) {
+    const confirmacao = confirm(`Tem certeza de que deseja excluir o curso ${curso.name}?`);
+    if (confirmacao) {
+      this.cursos = this.cursos.filter(i => i !== curso);
+    }
   }
 }

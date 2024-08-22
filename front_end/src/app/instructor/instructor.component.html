@@ -17,6 +17,8 @@
       >
         <i class="bi bi-pencil mr-2"></i> Editar
       </button>
+      
+      
     </div>
   </div>
 
@@ -41,12 +43,16 @@
           <td class="py-4 px-6">{{ instrutor.email }}</td>
           <td class="py-4 px-6">{{ instrutor.area }}</td>
           <td class="py-4 px-6">
+          
             <button
-              class="text-blue-600 hover:text-blue-800 transition-colors duration-300"
-              (click)="abrirModal(instrutor)"
-            >
-              <i class="bi bi-pencil"></i>
-            </button>
+    class="text-red-600 hover:text-red-800 transition-colors duration-300"
+    (click)="excluirInstrutor(instrutor)"
+  >
+    <i class="bi bi-trash"></i>
+  </button>
+
+            
+            
           </td>
         </tr>
       </tbody>
@@ -108,3 +114,4 @@
     </div>
   </div>
 </div>
+

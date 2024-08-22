@@ -70,7 +70,17 @@ export class InstructorComponent {
     }
   }
 
-  selecionarInstrutor(instrutor: Instructor) {
-    this.abrirModal(instrutor);
+ 
+
+  selecionarInstrutor(instrutor: any) {    
+    this.instrutorSelecionado = instrutor;
+}
+excluirInstrutor(instrutor: any) {
+  const confirmacao = confirm(`Tem certeza de que deseja excluir o instrutor ${instrutor.name}?`);
+  if (confirmacao) {
+    this.instrutores = this.instrutores.filter(i => i !== instrutor);
   }
+}
+
+
 }

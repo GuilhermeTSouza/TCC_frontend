@@ -67,6 +67,12 @@ export class ClassroomComponent {
   }
 
   selecionarSala(sala: Classroom) {
-    this.abrirModal(sala);
+    this.salaSelecionada = sala;
+  }
+  excluirSala(sala: any) {
+    const confirmacao = confirm(`Tem certeza de que deseja excluir o classroom ${sala.name}?`);
+    if (confirmacao) {
+      this.salas = this.salas.filter(i => i !== sala);
+    }
   }
 }
