@@ -1,5 +1,6 @@
+// src/app/app.module.ts
 import { NgModule } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms'; // Certifique-se de que isso está aqui
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -35,7 +36,7 @@ import { CoursesComponent } from './courses/courses.component';
     InstructorComponent,
     IntroductionComponent,
   ],
-  imports: [BrowserModule, RouterModule.forRoot(routes)],
+  imports: [BrowserModule, RouterModule.forRoot(routes), FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

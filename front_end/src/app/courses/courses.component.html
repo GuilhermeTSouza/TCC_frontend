@@ -1,6 +1,6 @@
 <div class="p-6 bg-white shadow rounded-lg">
   <div class="flex justify-between items-center mb-4">
-    <h2 class="text-2xl font-semibold text-gray-700">Gerenciar Cursos</h2>
+    <h2 class="text-2xl font-semibold text-gray-800">Gerenciar Cursos</h2>
     <div class="flex space-x-2">
       <button
         class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded flex items-center"
@@ -36,11 +36,11 @@
           <td class="py-4 px-6">{{ curso.name }}</td>
           <td class="py-4 px-6">
             <button
-            class="text-red-600 hover:text-red-800 transition-colors duration-300"
-            (click)="excluirCurso(curso)"
-          >
-            <i class="bi bi-trash"></i>
-          </button>
+              class="text-red-600 hover:text-red-800 transition-colors duration-300"
+              (click)="excluirCurso(curso)"
+            >
+              <i class="bi bi-trash"></i>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -57,38 +57,105 @@
 <!-- Modal -->
 <div
   *ngIf="exibirModal"
-  class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
-  id="my-modal"
+  class="fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center overflow-auto"
 >
   <div
-    class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+    class="bg-white w-full max-w-4xl mx-4 p-8 rounded-lg shadow-lg overflow-y-auto h-auto max-h-[90vh]"
   >
-    <div class="mt-3 text-center">
-      <h3 class="text-lg leading-6 font-medium text-gray-900">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-xl font-semibold text-gray-800">
         {{ cursoSelecionado ? "Editar Curso" : "Adicionar Curso" }}
       </h3>
-      <div class="mt-2 px-7 py-3">
+      <button class="text-gray-600 hover:text-gray-900" (click)="fecharModal()">
+        <i class="bi bi-x-circle text-2xl"></i>
+      </button>
+    </div>
+    <div class="space-y-6">
+      <input
+        type="text"
+        class="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [(ngModel)]="cursoNome"
+        placeholder="Nome do Curso"
+      />
+      <div>
+        <label class="block text-gray-700 font-medium mb-2">Professores</label>
         <input
           type="text"
-          class="border border-gray-300 p-2 w-full rounded"
-          [(ngModel)]="cursoNome"
-          placeholder="Nome do Curso"
+          class="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          [(ngModel)]="professores"
+          placeholder="Professores que podem ministrar a aula"
         />
       </div>
-      <div class="items-center px-4 py-3">
-        <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded mr-2"
-          (click)="salvarCurso()"
-        >
-          Salvar
-        </button>
-        <button
-          class="bg-gray-500 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded"
-          (click)="fecharModal()"
-        >
-          Cancelar
-        </button>
+      <div>
+        <label class="block text-gray-700 font-medium mb-2">Semestres</label>
+        <div class="flex flex-wrap gap-4">
+          <label *ngFor="let sem of semestres" class="inline-flex items-center">
+            <input
+              type="radio"
+              name="semestre"
+              [value]="sem"
+              [(ngModel)]="semestreSelecionado"
+              class="form-radio text-blue-500"
+            />
+            <span class="ml-2 text-gray-800">Semestre {{ sem }}</span>
+          </label>
+        </div>
       </div>
+      <div *ngIf="semestreSelecionado">
+        <div *ngFor="let i of getColunas(); let idx = index" class="space-y-4">
+          <h4 class="text-lg font-medium text-gray-800">
+            Semestre {{ idx + 1 }}
+          </h4>
+          <table class="w-full border border-gray-300 rounded-lg">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="border px-4 py-2 text-left">Disciplina</th>
+                <th class="border px-4 py-2 text-left">Carga Horária</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of disciplinas[idx]; let j = index">
+                <td class="border px-4 py-2">
+                  <input
+                    type="text"
+                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    [(ngModel)]="item.nome"
+                    placeholder="Nome da Disciplina"
+                  />
+                </td>
+                <td class="border px-4 py-2">
+                  <input
+                    type="number"
+                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    [(ngModel)]="item.cargaHoraria"
+                    placeholder="Carga Horária"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg"
+            (click)="adicionarDisciplina(idx)"
+          >
+            Adicionar Disciplina
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-end gap-4 mt-6">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg"
+        (click)="salvarCurso()"
+      >
+        Salvar
+      </button>
+      <button
+        class="bg-gray-500 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg"
+        (click)="fecharModal()"
+      >
+        Cancelar
+      </button>
     </div>
   </div>
 </div>

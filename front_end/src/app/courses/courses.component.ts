@@ -7,7 +7,7 @@ import { Course } from '../models/course';
 @Component({
   selector: 'app-courses',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Importando os módulos necessários
+  imports: [CommonModule, FormsModule],
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.css'],
 })
@@ -16,6 +16,10 @@ export class CoursesComponent {
   cursoSelecionado: Course | null = null;
   exibirModal = false;
   cursoNome = '';
+  professores = '';
+  semestreSelecionado: number | null = null;
+  semestres = [1, 2, 3, 4];
+  disciplinas: any[] = [[], [], [], []]; // Inicializa com 4 arrays para semestres
 
   constructor(private courseService: CourseService) {
     this.courseService.getAllCourses().subscribe((courses) => {
@@ -26,6 +30,9 @@ export class CoursesComponent {
   abrirModal(curso?: Course) {
     this.cursoSelecionado = curso || null;
     this.cursoNome = curso ? curso.name : '';
+    this.professores = '';
+    this.semestreSelecionado = null;
+    this.disciplinas = [[], [], [], []]; // Inicializa com 4 arrays para semestres
     this.exibirModal = true;
   }
 
@@ -33,12 +40,16 @@ export class CoursesComponent {
     this.exibirModal = false;
     this.cursoNome = '';
     this.cursoSelecionado = null;
+    this.professores = '';
+    this.semestreSelecionado = null;
+    this.disciplinas = [[], [], [], []];
   }
 
   salvarCurso() {
     if (this.cursoNome.trim()) {
       if (this.cursoSelecionado) {
         this.cursoSelecionado.name = this.cursoNome.trim();
+        // Atualizar o curso selecionado com os novos dados
       } else {
         const novoCurso: Course = {
           id: this.cursos.length + 1,
@@ -55,9 +66,19 @@ export class CoursesComponent {
   }
 
   excluirCurso(curso: any) {
-    const confirmacao = confirm(`Tem certeza de que deseja excluir o curso ${curso.name}?`);
+    const confirmacao = confirm(
+      `Tem certeza de que deseja excluir o curso ${curso.name}?`
+    );
     if (confirmacao) {
-      this.cursos = this.cursos.filter(i => i !== curso);
+      this.cursos = this.cursos.filter((i) => i !== curso);
     }
+  }
+
+  getColunas() {
+    return Array.from({ length: this.semestreSelecionado || 0 });
+  }
+
+  adicionarDisciplina(semestreIdx: number) {
+    this.disciplinas[semestreIdx].push({ nome: '', cargaHoraria: '' });
   }
 }
