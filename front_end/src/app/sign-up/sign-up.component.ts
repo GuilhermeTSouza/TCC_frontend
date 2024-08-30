@@ -19,19 +19,46 @@ export class SignUpComponent {
   confirmPassword: string = '';
   errorMessage: string | null = null;
 
+  usernameError: string | null = null;
+  emailError: string | null = null;
+  passwordError: string | null = null;
+  confirmPasswordError: string | null = null;
+
   constructor(
     private location: Location,
-    private router: Router, // Injetando o Router
-    private authService: AuthService // Injetando o AuthService
+    private router: Router,
+    private authService: AuthService
   ) {}
 
-  goBack(): void {
-    this.location.back();
+  validateEmail(email: string): boolean {
+    // Verifica se o email tem o formato correto e termina com @gmail.com
+    const emailPattern = /^[^\s@]+@[^\s@]+\.com$/;
+    const domainCheck = email.endsWith('@gmail.com');
+    return emailPattern.test(email) && domainCheck;
+  }
+  
+
+  validatePassword(password: string): boolean {
+    const passwordPattern = /^(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+    return passwordPattern.test(password);
   }
 
   signUp(): void {
+    this.resetErrors();
+
+    if (!this.validateEmail(this.email)) {
+      this.emailError = 'Email inválido!';
+      return;
+    }
+
+    if (!this.validatePassword(this.password)) {
+      this.passwordError =
+        'A senha deve ter pelo menos 8 caracteres, 1 número e 1 caractere especial!';
+      return;
+    }
+
     if (this.password !== this.confirmPassword) {
-      this.errorMessage = 'As senhas não coincidem!';
+      this.confirmPasswordError = 'As senhas não coincidem!';
       return;
     }
 
@@ -42,12 +69,8 @@ export class SignUpComponent {
     };
 
     localStorage.setItem('user', JSON.stringify(user));
-
-    // Marcar como logado no AuthService
     this.authService.logado = true;
-    console.log(this.authService.logado);
 
-    // Navegar para a página de introdução
     const url = `/introduction`;
     this.router.navigate([url]);
 
@@ -55,8 +78,18 @@ export class SignUpComponent {
     this.errorMessage = null;
   }
 
+  resetErrors(): void {
+    this.emailError = null;
+    this.passwordError = null;
+    this.confirmPasswordError = null;
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
+
   abrirPaginaSignIn() {
-    const url = "/auth/sign-in"
+    const url = '/auth/sign-in';
     this.router.navigate([url]);
   }
 }

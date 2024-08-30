@@ -38,6 +38,7 @@
             {{ errorMessage }}
           </div>
 
+          <!-- Nome de usuário -->
           <div>
             <label class="text-gray-800 text-sm mb-2 block"
               >Nome de usuário</label
@@ -52,8 +53,12 @@
                 placeholder="Digite seu nome de usuário"
               />
             </div>
+            <div *ngIf="usernameError" class="text-red-500 text-sm mt-1">
+              {{ usernameError }}
+            </div>
           </div>
 
+          <!-- Email -->
           <div>
             <label class="text-gray-800 text-sm mb-2 block">Email</label>
             <div class="relative flex items-center">
@@ -66,8 +71,12 @@
                 placeholder="Digite seu email"
               />
             </div>
+            <div *ngIf="emailError" class="text-red-500 text-sm mt-1">
+              {{ emailError }}
+            </div>
           </div>
 
+          <!-- Senha -->
           <div>
             <label class="text-gray-800 text-sm mb-2 block">Senha</label>
             <div class="relative flex items-center">
@@ -80,8 +89,12 @@
                 placeholder="Digite sua senha"
               />
             </div>
+            <div *ngIf="passwordError" class="text-red-500 text-sm mt-1">
+              {{ passwordError }}
+            </div>
           </div>
 
+          <!-- Confirmar Senha -->
           <div>
             <label class="text-gray-800 text-sm mb-2 block"
               >Confirmar Senha</label
@@ -95,6 +108,9 @@
                 class="w-full text-sm text-gray-800 border border-gray-300 px-4 py-2 rounded-lg outline-blue-600"
                 placeholder="Digite sua senha novamente"
               />
+            </div>
+            <div *ngIf="confirmPasswordError" class="text-red-500 text-sm mt-1">
+              {{ confirmPasswordError }}
             </div>
           </div>
 
