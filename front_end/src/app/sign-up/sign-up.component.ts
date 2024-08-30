@@ -36,7 +36,6 @@ export class SignUpComponent {
     const domainCheck = email.endsWith('@gmail.com');
     return emailPattern.test(email) && domainCheck;
   }
-  
 
   validatePassword(password: string): boolean {
     const passwordPattern = /^(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
@@ -45,6 +44,11 @@ export class SignUpComponent {
 
   signUp(): void {
     this.resetErrors();
+
+    if (this.username.trim() === '') {
+      this.usernameError = 'O nome de usuário não pode estar vazio!';
+      return;
+    }
 
     if (!this.validateEmail(this.email)) {
       this.emailError = 'Email inválido!';
@@ -79,6 +83,7 @@ export class SignUpComponent {
   }
 
   resetErrors(): void {
+    this.usernameError = null;
     this.emailError = null;
     this.passwordError = null;
     this.confirmPasswordError = null;
