@@ -1,0 +1,66 @@
+button {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  overflow: hidden;
+  background-color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s ease-in-out;
+}
+
+.icon-container i {
+  position: absolute;
+  transition: opacity 0.4s ease-in-out;
+  font-size: 18px;
+}
+
+.icon-container .fa-sun {
+  opacity: 0;
+}
+
+.icon-container .fa-moon {
+  opacity: 1;
+}
+
+button.toggle-theme-light .icon-container {
+  transform: translateX(0);
+}
+
+button.toggle-theme-light .icon-container .fa-sun {
+  opacity: 1;
+}
+
+button.toggle-theme-light .icon-container .fa-moon {
+  opacity: 0;
+}
+
+button.toggle-theme-dark .icon-container {
+  transform: translateX(0);
+}
+
+button.toggle-theme-dark .icon-container .fa-sun {
+  opacity: 0;
+}
+
+button.toggle-theme-dark .icon-container .fa-moon {
+  opacity: 1;
+}
+
+button span {
+  margin-left: 8px;
+}
+

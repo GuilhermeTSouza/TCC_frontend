@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common'; // Importe o CommonModule
+import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -8,20 +8,25 @@ import { AuthService } from '../services/auth.service';
   standalone: true,
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  imports: [CommonModule], // Adicione CommonModule aqui
+  imports: [CommonModule],
 })
 export class HeaderComponent implements OnInit {
   userInitial: string = '';
   title = 'front_end';
   currentTheme: string = 'light';
-  isLoggedIn: boolean = false; // Nova propriedade
+  isLoggedIn: boolean = false;
+  userColor: string = ''; // Armazena a cor sorteada
+
+  // Dicionário de cores
+  colors: string[] = ['#ef378a', '#18cfc3', '#ff8700', '#3754c6', '#28c241'];
 
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadTheme();
-    this.checkLoginStatus(); // Atualize o status de login
+    this.checkLoginStatus();
     this.updateUserInitial();
+    this.setUserColor(); // Define a cor do usuário
   }
 
   loadTheme(): void {
@@ -60,7 +65,7 @@ export class HeaderComponent implements OnInit {
   }
 
   private checkLoginStatus(): void {
-    this.isLoggedIn = this.authService.logado; // Use a propriedade logado do AuthService
+    this.isLoggedIn = this.authService.logado;
   }
 
   private updateUserInitial(): void {
@@ -74,4 +79,17 @@ export class HeaderComponent implements OnInit {
       }
     }
   }
+
+  // Define a cor do usuário
+  private setUserColor(): void {
+    const storedColor = localStorage.getItem('userColor');
+    if (storedColor) {
+      this.userColor = storedColor;
+    } else {
+      this.userColor =
+        this.colors[Math.floor(Math.random() * this.colors.length)];
+      localStorage.setItem('userColor', this.userColor);
+    }
+  }
 }
+
