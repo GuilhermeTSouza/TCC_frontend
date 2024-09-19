@@ -1,0 +1,85 @@
+<div class="flex justify-center items-center h-screen">
+  <div
+    class="relative w-3/5 h-5/5 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 flex flex-col items-center"
+  >
+    <!-- Back Button -->
+    <button
+      class="absolute top-4 left-4 text-gray-500 hover:text-gray-800 transition duration-200"
+      onclick="history.back()"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        class="w-6 h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+    </button>
+
+    <!-- Profile Icon -->
+    <div class="relative">
+      <!-- Centered profile icon -->
+      <div
+        class="w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl font-bold"
+        [style.backgroundColor]="user.userColor"
+      >
+        {{ (user.username && user.username[0].toUpperCase()) || "U" }}
+      </div>
+    </div>
+
+    <!-- Display username, email, and password fields -->
+    <div class="mt-12 space-y-8 w-4/5 mx-auto">
+      <div class="flex flex-col">
+        <label
+          class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+          >Username</label
+        >
+        <p
+          class="mt-1 text-lg text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-700 p-2 rounded-md"
+        >
+          {{ user.username || "N/A" }}
+        </p>
+      </div>
+      <div class="flex flex-col">
+        <label
+          class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+          >Email</label
+        >
+        <p
+          class="mt-1 text-lg text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-600 p-2 rounded-md"
+        >
+          {{ user.email || "N/A" }}
+        </p>
+      </div>
+      <div class="flex flex-col relative">
+        <label
+          class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+          >Password</label
+        >
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          class="mt-1 text-lg text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-700 p-2 rounded-md focus:outline-none"
+          [value]="user.password || 'N/A'"
+          readonly
+        />
+        <button
+          (click)="showPassword = !showPassword"
+          class="absolute right-0 bottom-2 text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-600"
+        >
+          <i
+            class="bi"
+            [class.bi-eye-slash]="showPassword"
+            [class.bi-eye]="!showPassword"
+          ></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

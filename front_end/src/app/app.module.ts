@@ -18,6 +18,8 @@ import { routes } from './app.routes';
 import { MainLayoutComponent } from './layouts/main/main.component';
 import { AuthLayoutComponent } from './layouts/auth/auth.component';
 import { CoursesComponent } from './courses/courses.component';
+import { ProfileComponent } from './profile/profile.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -35,8 +37,9 @@ import { CoursesComponent } from './courses/courses.component';
     CoursesComponent,
     InstructorComponent,
     IntroductionComponent,
+    ProfileComponent
   ],
-  imports: [BrowserModule, RouterModule.forRoot(routes), FormsModule],
+  imports: [BrowserModule, RouterModule.forRoot(routes), FormsModule, CommonModule],
   providers: [],
   bootstrap: [AppComponent],
 })

@@ -17,14 +17,40 @@
           <i class="fas fa-moon"></i>
         </div>
       </button>
+
       <!-- Exibir ícone de usuário apenas se logado -->
-      <div
-        *ngIf="isLoggedIn"
-        [ngStyle]="{ 'background-color': userColor }"
-        class="w-11 h-11 rounded-full flex items-center justify-center text-white text-lg font-bold"
-      >
-        {{ userInitial }}
+      <div class="relative">
+        <div
+          *ngIf="isLoggedIn"
+          [ngStyle]="{ 'background-color': userColor }"
+          class="w-11 h-11 rounded-full flex items-center justify-center text-white text-lg font-bold cursor-pointer"
+          (click)="toggleDropdown()"
+        >
+          {{ userInitial }}
+        </div>
+
+        <!-- Dropdown menu -->
+        <div
+          *ngIf="isDropdownOpen"
+          class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-24 bg-blue-600 rounded-md shadow-lg z-20"
+        >
+          <a
+            class="block px-4 py-2 text-white hover:bg-blue-700 text-center rounded-t-md flex items-center justify-center space-x-2 cursor-pointer"
+            (click)="abrirPaginaPerfil()"
+          >
+            <i class="bi bi-person"></i>
+            <span>Perfil</span>
+          </a>
+          <a
+            class="block px-4 py-2 text-white hover:bg-blue-700 text-center rounded-b-md flex items-center justify-center space-x-2 cursor-pointer"
+            (click)="logout()"
+          >
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Sair</span>
+          </a>
+        </div>
       </div>
+
       <a
         *ngIf="!isLoggedIn"
         class="text-white flex items-center no-underline cursor-pointer"

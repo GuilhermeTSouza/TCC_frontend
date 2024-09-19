@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   currentTheme: string = 'light';
   isLoggedIn: boolean = false;
   userColor: string = ''; // Armazena a cor sorteada
+  isDropdownOpen: boolean = false;
 
   // Dicionário de cores
   colors: string[] = ['#ef378a', '#18cfc3', '#ff8700', '#3754c6', '#28c241'];
@@ -64,6 +65,17 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([url]);
   }
 
+  abrirPaginaPerfil(): void {
+    const url = `/auth/profile`;
+    this.router.navigate([url]);
+  }
+
+  logout(): void {
+    this.authService.logado = false;
+    this.isLoggedIn = false;
+    this.router.navigate(['/auth/sign-in']);
+  }
+
   private checkLoginStatus(): void {
     this.isLoggedIn = this.authService.logado;
   }
@@ -90,5 +102,9 @@ export class HeaderComponent implements OnInit {
         this.colors[Math.floor(Math.random() * this.colors.length)];
       localStorage.setItem('userColor', this.userColor);
     }
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 }

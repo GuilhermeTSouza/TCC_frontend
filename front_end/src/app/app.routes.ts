@@ -10,6 +10,7 @@ import { SupportComponent } from './support/support.component';
 import { MainLayoutComponent } from './layouts/main/main.component';
 import { CoursesComponent } from './courses/courses.component';
 import { AuthLayoutComponent } from './layouts/auth/auth.component';
+import { ProfileComponent } from './profile/profile.component';
 export const routes: Routes = [
   {
     path: '',
@@ -32,6 +33,7 @@ export const routes: Routes = [
     children: [
       { path: 'sign-in', component: SignInComponent },
       { path: 'sign-up', component: SignUpComponent },
+      { path: 'profile', component: ProfileComponent },
       { path: '', redirectTo: '/sign-up', pathMatch: 'full' },
     ],
   },

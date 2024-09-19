@@ -19,7 +19,7 @@ import { FooterComponent } from '../../footer/footer.component';
   styleUrls: ['./main.component.css'],
 })
 export class MainLayoutComponent {
-  isDarkTheme: boolean = false; // Inicie com o tema claro por padrão
+  isDarkTheme: boolean = false; // Inicia com o tema claro por padrão
 
   toggleTheme() {
     this.isDarkTheme = !this.isDarkTheme;
