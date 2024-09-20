@@ -86,7 +86,7 @@ export class ClassroomComponent {
     this.salaSelecionada = sala;
   }
   excluirSala(sala: Classroom) {
-    const confirmacao = confirm(`Tem certeza de que deseja excluir o classroom ${sala.number_classroom}?`);
+    const confirmacao = confirm(`Tem certeza de que deseja excluir a sala de aula N° ${sala.number_classroom}?`);
     if (confirmacao) {
       this.classroomService.delete_classroom(sala.id)
       .subscribe({

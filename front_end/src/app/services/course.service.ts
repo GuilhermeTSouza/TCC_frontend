@@ -31,4 +31,14 @@ export class CourseService {
   deleteCourse(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+  save_course(novoCurso : Course){
+    return this.http.post(`${environment.apiUrl}/classroom`,novoCurso)
+  }
+
+  delete_course(cursoId: number){
+    return this.http.delete(`${environment.apiUrl}/classroom/${cursoId}`)
+  }
+  edit_course(curso: Course){
+    return this.http.put(`${environment.apiUrl}/classroom`, curso)
+  }
 }
