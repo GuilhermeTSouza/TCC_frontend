@@ -14,4 +14,12 @@ export class ClassroomService {
   getAllClassrooms() {
     return this.http.get<Classroom[]>(this.apiUrl);
   }
+  
+  save_classroom(novaSala: Classroom){
+    return this.http.post(`${environment.apiUrl}/classroom`,novaSala)
+  }
+
+  delete_classroom(salaId: number){
+    return this.http.delete(`${environment.apiUrl}/classroom/${salaId}`)
+  }
 }
