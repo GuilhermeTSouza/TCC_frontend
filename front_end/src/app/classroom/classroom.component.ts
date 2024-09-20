@@ -55,6 +55,13 @@ export class ClassroomComponent {
         this.salaSelecionada.number_classroom = this.salaNumero;
         this.salaSelecionada.capacity = this.salaCapacidade;
         this.salaSelecionada.computer = this.salaPossuiComputador;
+
+        this.classroomService.edit_classroom(this.salaSelecionada)
+          .subscribe({
+            next: () => this.get_classroom(),
+            error: () => alert("Erro: ")
+          })
+
       } else {
         const novaSala: Classroom = {
           id: 0,

@@ -22,4 +22,7 @@ export class ClassroomService {
   delete_classroom(salaId: number){
     return this.http.delete(`${environment.apiUrl}/classroom/${salaId}`)
   }
+  edit_classroom(sala: Classroom){
+    return this.http.put(`${environment.apiUrl}/classroom`, sala)
+  }
 }
