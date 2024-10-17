@@ -14,4 +14,14 @@ export class TeacherService {
   getAllTeachers() {
     return this.http.get<Teacher[]>(this.apiUrl);
   }
+  save_teacher(novoDocente: Teacher){
+    return this.http.post(`${environment.apiUrl}/teacher`,novoDocente)
+  }
+
+  delete_teacher(docenteId: number){
+    return this.http.delete(`${environment.apiUrl}/teacher/${docenteId}`)
+  }
+  edit_teacher(docente: Teacher){
+    return this.http.put(`${environment.apiUrl}/teacher`,docente)
+  }
 }

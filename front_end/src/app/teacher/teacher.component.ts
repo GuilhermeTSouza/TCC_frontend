@@ -20,9 +20,12 @@ export class TeacherComponent {
   docenteArea = '';
 
   constructor(private teacherService: TeacherService) {
+    this.get_teacher
+    }
+  get_teacher(){
     this.teacherService.getAllTeachers().subscribe((teachers) => {
       this.docentes = teachers;
-    });
+  });
   }
 
   abrirModal(docente?: Teacher | null) {
@@ -55,6 +58,11 @@ export class TeacherComponent {
         this.docenteSelecionado.name = this.docenteNome.trim();
         this.docenteSelecionado.email = this.docenteEmail.trim();
         this.docenteSelecionado.area = this.docenteArea.trim();
+        this.teacherService.edit_teacher(this.docenteSelecionado)
+          .subscribe({
+            next: () => this.get_teacher(),
+            error: () => alert("Erro: ")
+          })
       } else {
         const novoDocente: Teacher = {
           id: this.docentes.length + 1,
@@ -62,7 +70,11 @@ export class TeacherComponent {
           email: this.docenteEmail.trim(),
           area: this.docenteArea.trim(),
         };
-        this.docentes.push(novoDocente);
+        this.teacherService.save_teacher(novoDocente)
+    .subscribe({
+      next: () => this.get_teacher(),
+      error: () => alert("Erro: ")
+    })
       }
       this.fecharModal();
     } else {
@@ -77,7 +89,11 @@ export class TeacherComponent {
   excluirDocente(docente: any) {
     const confirmacao = confirm(`Tem certeza de que deseja excluir o docente ${docente.name}?`);
     if (confirmacao) {
-      this.docentes = this.docentes.filter(i => i !== docente);
-    }
+      this.teacherService.delete_teacher(docente.id)
+      .subscribe({
+        next: () => this.get_teacher(),
+        error: () => alert("Erro: ")
+    })
   }
+}
 }

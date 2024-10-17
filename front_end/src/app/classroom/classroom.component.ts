@@ -20,6 +20,10 @@ export class ClassroomComponent {
   salaPossuiComputador = false;
 
   constructor(private classroomService: ClassroomService) {
+    this.get_classroom()
+  }
+
+  get_classroom() {
     this.classroomService.getAllClassrooms().subscribe((classrooms) => {
       this.salas = classrooms;
     });
@@ -51,14 +55,26 @@ export class ClassroomComponent {
         this.salaSelecionada.number_classroom = this.salaNumero;
         this.salaSelecionada.capacity = this.salaCapacidade;
         this.salaSelecionada.computer = this.salaPossuiComputador;
+
+        this.classroomService.edit_classroom(this.salaSelecionada)
+          .subscribe({
+            next: () => this.get_classroom(),
+            error: () => alert("Erro: ")
+          })
+
       } else {
         const novaSala: Classroom = {
-          id: this.salas.length + 1,
+          id: 0,
           number_classroom: this.salaNumero,
           capacity: this.salaCapacidade,
           computer: this.salaPossuiComputador,
         };
-        this.salas.push(novaSala);
+
+        this.classroomService.save_classroom(novaSala)
+          .subscribe({
+            next: () => this.get_classroom(),
+            error: () => alert("Erro: ")
+          })
       }
       this.fecharModal();
     } else {
@@ -69,10 +85,14 @@ export class ClassroomComponent {
   selecionarSala(sala: Classroom) {
     this.salaSelecionada = sala;
   }
-  excluirSala(sala: any) {
-    const confirmacao = confirm(`Tem certeza de que deseja excluir o classroom ${sala.name}?`);
+  excluirSala(sala: Classroom) {
+    const confirmacao = confirm(`Tem certeza de que deseja excluir a sala de aula N° ${sala.number_classroom}?`);
     if (confirmacao) {
-      this.salas = this.salas.filter(i => i !== sala);
+      this.classroomService.delete_classroom(sala.id)
+      .subscribe({
+        next: () => this.get_classroom(),
+        error: () => alert("Erro: ")
+      })
     }
   }
 }

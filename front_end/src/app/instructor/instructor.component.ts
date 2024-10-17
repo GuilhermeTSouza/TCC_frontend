@@ -20,9 +20,13 @@ export class InstructorComponent {
   instrutorArea = '';
 
   constructor(private instructorService: InstructorService) {
-    this.instructorService.getAllInstructors().subscribe((instructors) => {
-      this.instrutores = instructors;
+    this.get_instructors
+    }
+    get_instructors(){
+      this.instructorService.getAllInstructors().subscribe((instructors) => {
+        this.instrutores = instructors;
     });
+    
   }
 
   abrirModal(instrutor?: Instructor | null) {
@@ -55,6 +59,11 @@ export class InstructorComponent {
         this.instrutorSelecionado.name = this.instrutorNome.trim();
         this.instrutorSelecionado.email = this.instrutorEmail.trim();
         this.instrutorSelecionado.area = this.instrutorArea.trim();
+        this.instructorService.edit_instructor(this.instrutorSelecionado)
+          .subscribe({
+            next: () => this.get_instructors(),
+            error: () => alert("Erro: ")
+          })
       } else {
         const novoInstrutor: Instructor = {
           id: this.instrutores.length + 1,
@@ -62,12 +71,17 @@ export class InstructorComponent {
           email: this.instrutorEmail.trim(),
           area: this.instrutorArea.trim(),
         };
-        this.instrutores.push(novoInstrutor);
+        this.instructorService.save_instructor(novoInstrutor)
+    .subscribe({
+      next: () => this.get_instructors(),
+      error: () => alert("Erro: ")
+    })
       }
       this.fecharModal();
     } else {
       alert('Todos os campos são obrigatórios.');
     }
+    
   }
 
  
@@ -78,9 +92,12 @@ export class InstructorComponent {
 excluirInstrutor(instrutor: any) {
   const confirmacao = confirm(`Tem certeza de que deseja excluir o instrutor ${instrutor.name}?`);
   if (confirmacao) {
-    this.instrutores = this.instrutores.filter(i => i !== instrutor);
-  }
+    this.instructorService.delete_instructor(instrutor.id)
+      .subscribe({
+        next: () => this.get_instructors(),
+        error: () => alert("Erro: ")
+  })
 }
 
 
-}
+}}
