@@ -24,7 +24,10 @@ export class CoursesComponent {
   semestres = [1, 2, 3, 4];
   disciplinas: any[] = [[], [], [], []]; // Inicializa com 4 arrays para semestres
 
-  constructor(private courseService: CourseService, private teacherService: TeacherService) {
+  constructor(
+    private courseService: CourseService,
+    private teacherService: TeacherService
+  ) {
     this.courseService.getAllCourses().subscribe((courses) => {
       this.cursos = courses;
     });
@@ -88,4 +91,3 @@ export class CoursesComponent {
     this.disciplinas[semestreIdx].push({ nome: '', cargaHoraria: '' });
   }
 }
-
