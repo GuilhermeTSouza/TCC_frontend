@@ -88,3 +88,4 @@ export class CoursesComponent {
     this.disciplinas[semestreIdx].push({ nome: '', cargaHoraria: '' });
   }
 }
+
