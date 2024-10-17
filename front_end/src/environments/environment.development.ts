@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: 'http://localhost:5000',
+  apiUrl: 'https://senai-class-backend.onrender.com',
   logado: true,
 };

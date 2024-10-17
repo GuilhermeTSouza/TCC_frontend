@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CourseService } from '../services/course.service';
 import { Course } from '../models/course';
+import { TeacherService } from '../services/teacher.service';
+import { Teacher } from '../models/teacher';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-courses',
@@ -13,6 +15,7 @@ import { Course } from '../models/course';
 })
 export class CoursesComponent {
   cursos: Course[] = [];
+  teachers: Teacher[] = [];
   cursoSelecionado: Course | null = null;
   exibirModal = false;
   cursoNome = '';
@@ -21,9 +24,12 @@ export class CoursesComponent {
   semestres = [1, 2, 3, 4];
   disciplinas: any[] = [[], [], [], []]; // Inicializa com 4 arrays para semestres
 
-  constructor(private courseService: CourseService) {
+  constructor(private courseService: CourseService, private teacherService: TeacherService) {
     this.courseService.getAllCourses().subscribe((courses) => {
       this.cursos = courses;
+    });
+    this.teacherService.getAllTeachers().subscribe((teachers) => {
+      this.teachers = teachers;
     });
   }
 
