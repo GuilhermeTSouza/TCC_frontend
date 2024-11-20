@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ClassroomService } from '../services/classroom.service';
 import { Classroom } from '../models/classroom';
+import { AreaService } from '../services/area.service';
+import { Area } from '../models/area';
 
 @Component({
   selector: 'app-classroom',
@@ -15,12 +17,15 @@ export class ClassroomComponent {
   salas: Classroom[] = [];
   salaSelecionada: Classroom | null = null;
   exibirModal = false;
-  salaNumero = 1;
-  salaCapacidade = 1;
-  salaPossuiComputador = false;
+  salaNome = '';
+  salaAreaId = 0;
+  salaAreaNome='';
+  salaLugares = 0;
+  areas: Area[] = [];
 
-  constructor(private classroomService: ClassroomService) {
-    this.get_classroom()
+  constructor(private classroomService: ClassroomService, private areaService: AreaService) {
+    this.get_classroom();
+    this.get_areas();
   }
 
   get_classroom() {
@@ -29,11 +34,18 @@ export class ClassroomComponent {
     });
   }
 
+  get_areas(){
+    this.areaService.getAllAreas().subscribe((area) => {
+      this.areas = area;
+    });
+  }
+
   abrirModal(classroom?: Classroom | null) {
     this.salaSelecionada = classroom || null;
-    this.salaNumero = classroom ? classroom.number_classroom : 1;
-    this.salaCapacidade = classroom ? classroom.capacity : 1;
-    this.salaPossuiComputador = classroom ? classroom.computer : false;
+    this.salaNome = classroom ? classroom.name : '';
+    this.salaAreaId = classroom ? classroom.area_id : 0;
+    this.salaAreaNome = classroom ? classroom.area_name : '';
+    this.salaLugares = classroom ? classroom.nb_places : 0;
     this.exibirModal = true;
   }
 
@@ -43,18 +55,19 @@ export class ClassroomComponent {
   }
 
   resetarFormulario() {
-    this.salaNumero = 1;
-    this.salaCapacidade = 1;
-    this.salaPossuiComputador = false;
+    this.salaNome = '';
+    this.salaAreaId = 0;
+    this.salaAreaNome='';
+    this.salaLugares = 0;
     this.salaSelecionada = null;
   }
 
   salvarSala() {
-    if (this.salaNumero > 0 && this.salaCapacidade > 0) {
+    if (this.salaNome.trim()) {
       if (this.salaSelecionada) {
-        this.salaSelecionada.number_classroom = this.salaNumero;
-        this.salaSelecionada.capacity = this.salaCapacidade;
-        this.salaSelecionada.computer = this.salaPossuiComputador;
+        this.salaSelecionada.name = this.salaNome;
+        this.salaSelecionada.area_id = this.salaAreaId;
+        this.salaSelecionada.nb_places = this.salaLugares;
 
         this.classroomService.edit_classroom(this.salaSelecionada)
           .subscribe({
@@ -64,10 +77,11 @@ export class ClassroomComponent {
 
       } else {
         const novaSala: Classroom = {
-          id: 0,
-          number_classroom: this.salaNumero,
-          capacity: this.salaCapacidade,
-          computer: this.salaPossuiComputador,
+          id: this.salas.length + 1,
+          name: this.salaNome,
+          area_id: this.salaAreaId,
+          area_name: this.salaAreaNome,
+          nb_places: this.salaLugares,
         };
 
         this.classroomService.save_classroom(novaSala)
@@ -86,7 +100,7 @@ export class ClassroomComponent {
     this.salaSelecionada = sala;
   }
   excluirSala(sala: Classroom) {
-    const confirmacao = confirm(`Tem certeza de que deseja excluir a sala de aula N° ${sala.number_classroom}?`);
+    const confirmacao = confirm(`Tem certeza de que deseja excluir a sala de aula N° ${sala.name}?`);
     if (confirmacao) {
       this.classroomService.delete_classroom(sala.id)
       .subscribe({

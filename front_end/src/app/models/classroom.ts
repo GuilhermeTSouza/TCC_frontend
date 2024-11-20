@@ -1,6 +1,7 @@
 export interface Classroom {
   id: number;
-  number_classroom: number;
-  capacity: number;
-  computer: boolean;
+  name: string;
+  nb_places: number;
+  area_id: number;
+  area_name: string;
 }

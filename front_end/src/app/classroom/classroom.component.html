@@ -24,9 +24,9 @@
     <table class="min-w-full text-sm text-left text-gray-500">
       <thead class="bg-gray-100 text-gray-700">
         <tr>
-          <th scope="col" class="py-3 px-6">Número da Sala</th>
-          <th scope="col" class="py-3 px-6">Capacidade</th>
-          <th scope="col" class="py-3 px-6">Computador</th>
+          <th scope="col" class="py-3 px-6">Nome da Sala</th>
+          <th scope="col" class="py-3 px-6">Area</th>
+          <th scope="col" class="py-3 px-6">N° de Lugares</th>
           <th scope="col" class="py-3 px-6">Ações</th>
         </tr>
       </thead>
@@ -37,9 +37,9 @@
           [class.bg-blue-50]="sala === salaSelecionada"
           (click)="selecionarSala(sala)"
         >
-          <td class="py-4 px-6">{{ sala.number_classroom }}</td>
-          <td class="py-4 px-6">{{ sala.capacity }}</td>
-          <td class="py-4 px-6">{{ sala.computer ? "Sim" : "Não" }}</td>
+          <td class="py-4 px-6">{{ sala.name }}</td>
+          <td class="py-4 px-6">{{ sala.area_name }}</td>
+          <td class="py-4 px-6">{{ sala.nb_places }}</td>
           <td class="py-4 px-6">
             <button
             class="text-red-600 hover:text-red-800 transition-colors duration-300"
@@ -73,43 +73,25 @@
       </h3>
       <div class="mt-2 px-7 py-3">
         <input
-          type="number"
+          type="string"
           class="border border-gray-300 p-2 w-full rounded"
-          [(ngModel)]="salaNumero"
-          placeholder="Número da Sala"
+          [(ngModel)]="salaNome"
+          placeholder="Nome da Sala"
         />
-        <label class="block text-left mt-4">
-          Capacidade:
-          <input
-            type="number"
-            class="border border-gray-300 p-2 w-full rounded mt-1"
-            [(ngModel)]="salaCapacidade"
-            placeholder="Capacidade"
-            min="0"
-          />
-        </label>
-        <label class="block text-left mt-4">
-          Possui Computador?
-          <div class="flex space-x-4 mt-2">
-            <label class="flex items-center">
-              <input
-                type="radio"
-                class="mr-2"
-                [(ngModel)]="salaPossuiComputador"
-                [value]="true"
-              />
-              Sim
-            </label>
-            <label class="flex items-center">
-              <input
-                type="radio"
-                class="mr-2"
-                [(ngModel)]="salaPossuiComputador"
-                [value]="false"
-              />
-              Não
-            </label>
-          </div>
+        <select class="border border-gray-300 p-2 mt-2 w-full rounded" [(ngModel)]="salaAreaId">
+          
+          <option value="" selected>Selecione uma área</option>
+          <option [value]="area.id" *ngFor="let area of areas">
+            {{ area.name }}
+          </option>
+        </select>
+        <label class="block text-left mt-2">
+          Quantidade de Lugares: 
+        <input
+          type="number"
+          class="border border-gray-300 p-2 mt-2 w-full rounded"
+          [(ngModel)]="salaLugares"
+        />
         </label>
       </div>
       <div class="flex justify-center px-4 py-3">
