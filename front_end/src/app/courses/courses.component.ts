@@ -60,11 +60,11 @@ export class CoursesComponent {
         this.cursoSelecionado.name = this.cursoNome.trim();
         // Atualizar o curso selecionado com os novos dados
       } else {
-        const novoCurso: Course = {
-          id: this.cursos.length + 1,
-          name: this.cursoNome.trim(),
-        };
-        this.cursos.push(novoCurso);
+        // const novoCurso: Course = {
+        //   id: this.cursos.length + 1,
+        //   name: this.cursoNome.trim(),
+        // };
+        // this.cursos.push(novoCurso);
       }
       this.fecharModal();
     }
