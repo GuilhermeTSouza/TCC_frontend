@@ -1,6 +1,7 @@
 export interface Disciplina {
-    nome: string;
-    cargaHoraria: string;
-    professor: string;
-    observacoes: string;
+    id:number;
+    name: string;
+    course_id: number;
+    teacher_id: number;
+    workload: number;
   }

@@ -16,11 +16,9 @@ export class TeacherComponent {
   docenteSelecionado: Teacher | null = null;
   exibirModal = false;
   docenteNome = '';
-  docenteEmail = '';
-  docenteArea = '';
 
   constructor(private teacherService: TeacherService) {
-    this.get_teacher
+    this.get_teacher()
     }
   get_teacher(){
     this.teacherService.getAllTeachers().subscribe((teachers) => {
@@ -31,8 +29,6 @@ export class TeacherComponent {
   abrirModal(docente?: Teacher | null) {
     this.docenteSelecionado = docente || null;
     this.docenteNome = docente ? docente.name : '';
-    this.docenteEmail = docente ? docente.email : '';
-    this.docenteArea = docente ? docente.area : '';
     this.exibirModal = true;
   }
 
@@ -43,21 +39,15 @@ export class TeacherComponent {
 
   resetarFormulario() {
     this.docenteNome = '';
-    this.docenteEmail = '';
-    this.docenteArea = '';
     this.docenteSelecionado = null;
   }
 
   salvarDocente() {
     if (
-      this.docenteNome.trim() &&
-      this.docenteEmail.trim() &&
-      this.docenteArea.trim()
+      this.docenteNome.trim()
     ) {
       if (this.docenteSelecionado) {
         this.docenteSelecionado.name = this.docenteNome.trim();
-        this.docenteSelecionado.email = this.docenteEmail.trim();
-        this.docenteSelecionado.area = this.docenteArea.trim();
         this.teacherService.edit_teacher(this.docenteSelecionado)
           .subscribe({
             next: () => this.get_teacher(),
@@ -66,9 +56,7 @@ export class TeacherComponent {
       } else {
         const novoDocente: Teacher = {
           id: this.docentes.length + 1,
-          name: this.docenteNome.trim(),
-          email: this.docenteEmail.trim(),
-          area: this.docenteArea.trim(),
+          name: this.docenteNome.trim()
         };
         this.teacherService.save_teacher(novoDocente)
     .subscribe({

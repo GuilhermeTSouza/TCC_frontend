@@ -36,11 +36,6 @@
         >
           <td class="py-4 px-6">{{ curso.name }}</td>
           <td class="py-4 px-6">
-            {{
-              semestreSelecionado ? "Semestre " + semestreSelecionado : "Nenhum"
-            }}
-          </td>
-          <td class="py-4 px-6">
             <button
               class="text-red-600 hover:text-red-800 transition-colors duration-300"
               (click)="excluirCurso(curso)"
@@ -80,79 +75,42 @@
       <input
         type="text"
         class="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        [(ngModel)]="cursoNome"
+        [(ngModel)]="courseName"
         placeholder="Nome do Curso"
       />
-      <div>
-        <label class="block text-gray-700 font-medium mb-2">Professores</label>
-        <select>
-          <option value="" *ngFor="let teacher; in: teachers">
-            {{ teacher.name }}
-          </option>
-        </select>
-        <input
-          type="text"
-          class="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          [(ngModel)]="professores"
-          placeholder="Professores que podem ministrar a aula"
-        />
-      </div>
-      <div>
-        <label class="block text-gray-700 font-medium mb-2">Semestres</label>
-        <div class="flex flex-wrap gap-4">
-          <label *ngFor="let sem of semestres" class="inline-flex items-center">
-            <input
-              type="radio"
-              name="semestre"
-              [value]="sem"
-              [(ngModel)]="semestreSelecionado"
-              class="form-radio text-blue-500"
-            />
-            <span class="ml-2 text-gray-800">Semestre {{ sem }}</span>
-          </label>
+      <select class="border border-gray-300 p-2 mt-2 w-full rounded" [(ngModel)]="courseAreaId">
+          
+        <option value="" selected>Selecione uma área</option>
+        <option [value]="area.id" *ngFor="let area of areas">
+          {{ area.name }}
+        </option>
+      </select>
+      <div class="container mt-5">
+        <h5>Escolha suas opções:</h5>
+      
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="opcao1" [(ngModel)]="monday">
+          <label class="form-check-label" for="opcao1">Segunda</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="opcao2" [(ngModel)]="tuesday">
+          <label class="form-check-label" for="opcao2">Terça</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="opcao3" [(ngModel)]="wednesday">
+          <label class="form-check-label" for="opcao3">Quarta</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="opcao3" [(ngModel)]="thursday">
+          <label class="form-check-label" for="opcao3">Quinta</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="opcao3" [(ngModel)]="friday">
+          <label class="form-check-label" for="opcao3"> Sexta </label>
         </div>
       </div>
-      <div *ngIf="semestreSelecionado">
-        <div *ngFor="let i of getColunas(); let idx = index" class="space-y-4">
-          <h4 class="text-lg font-medium text-gray-800">
-            Semestre {{ idx + 1 }}
-          </h4>
-          <table class="w-full border border-gray-300 rounded-lg">
-            <thead class="bg-gray-100">
-              <tr>
-                <th class="border px-4 py-2 text-left">Disciplina</th>
-                <th class="border px-4 py-2 text-left">Carga Horária</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of disciplinas[idx]; let j = index">
-                <td class="border px-4 py-2">
-                  <input
-                    type="text"
-                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    [(ngModel)]="item.nome"
-                    placeholder="Nome da Disciplina"
-                  />
-                </td>
-                <td class="border px-4 py-2">
-                  <input
-                    type="number"
-                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    [(ngModel)]="item.cargaHoraria"
-                    placeholder="Carga Horária"
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <button
-            class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg"
-            (click)="adicionarDisciplina(idx)"
-          >
-            Adicionar Disciplina
-          </button>
-        </div>
-      </div>
+      
+     
     </div>
     <div class="flex justify-end gap-4 mt-6">
       <button

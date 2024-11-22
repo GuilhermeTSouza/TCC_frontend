@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InstructorService } from '../services/instructor.service';
 import { Instructor } from '../models/instructor';
+import { Area } from '../models/area';
+import { AreaService } from '../services/area.service';
 
 @Component({
   selector: 'app-instructor',
@@ -16,24 +18,31 @@ export class InstructorComponent {
   instrutorSelecionado: Instructor | null = null;
   exibirModal = false;
   instrutorNome = '';
-  instrutorEmail = '';
-  instrutorArea = '';
+  instrutorAreaId = 0;
+  instrutorAreaNome = '';
+  areas: Area[] = [];
 
-  constructor(private instructorService: InstructorService) {
-    this.get_instructors
+  constructor(private instructorService: InstructorService, private areaService: AreaService) {
+    this.get_instructors()
+    this.get_areas()
     }
     get_instructors(){
       this.instructorService.getAllInstructors().subscribe((instructors) => {
         this.instrutores = instructors;
     });
+}
+    get_areas(){
+        this.areaService.getAllAreas().subscribe((areas) => {
+          this.areas = areas;
+      });
     
   }
 
   abrirModal(instrutor?: Instructor | null) {
     this.instrutorSelecionado = instrutor || null;
     this.instrutorNome = instrutor ? instrutor.name : '';
-    this.instrutorEmail = instrutor ? instrutor.email : '';
-    this.instrutorArea = instrutor ? instrutor.area : '';
+    this.instrutorAreaId = instrutor ? instrutor.area_id : 0;
+    this.instrutorAreaNome = instrutor ? instrutor.area_name : '';
     this.exibirModal = true;
   }
 
@@ -44,21 +53,20 @@ export class InstructorComponent {
 
   resetarFormulario() {
     this.instrutorNome = '';
-    this.instrutorEmail = '';
-    this.instrutorArea = '';
+    this.instrutorAreaId = 0;
+    this.instrutorAreaNome = '';
     this.instrutorSelecionado = null;
   }
 
   salvarInstrutor() {
     if (
-      this.instrutorNome.trim() &&
-      this.instrutorEmail.trim() &&
-      this.instrutorArea.trim()
+      this.instrutorNome.trim() 
     ) {
       if (this.instrutorSelecionado) {
-        this.instrutorSelecionado.name = this.instrutorNome.trim();
-        this.instrutorSelecionado.email = this.instrutorEmail.trim();
-        this.instrutorSelecionado.area = this.instrutorArea.trim();
+        this.instrutorSelecionado.name = this.instrutorNome;
+        this.instrutorSelecionado.area_id = this.instrutorAreaId;
+        this.instrutorSelecionado.area_name = this.instrutorAreaNome;
+
         this.instructorService.edit_instructor(this.instrutorSelecionado)
           .subscribe({
             next: () => this.get_instructors(),
@@ -67,9 +75,9 @@ export class InstructorComponent {
       } else {
         const novoInstrutor: Instructor = {
           id: this.instrutores.length + 1,
-          name: this.instrutorNome.trim(),
-          email: this.instrutorEmail.trim(),
-          area: this.instrutorArea.trim(),
+          name: this.instrutorNome,
+          area_id: this.instrutorAreaId,
+          area_name: this.instrutorAreaNome
         };
         this.instructorService.save_instructor(novoInstrutor)
     .subscribe({
@@ -86,10 +94,10 @@ export class InstructorComponent {
 
  
 
-  selecionarInstrutor(instrutor: any) {    
+  selecionarInstrutor(instrutor: Instructor) {    
     this.instrutorSelecionado = instrutor;
 }
-excluirInstrutor(instrutor: any) {
+excluirInstrutor(instrutor: Instructor) {
   const confirmacao = confirm(`Tem certeza de que deseja excluir o instrutor ${instrutor.name}?`);
   if (confirmacao) {
     this.instructorService.delete_instructor(instrutor.id)

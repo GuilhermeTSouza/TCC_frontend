@@ -27,7 +27,6 @@
       <thead class="bg-gray-100 text-gray-700">
         <tr>
           <th scope="col" class="py-3 px-6">Nome</th>
-          <th scope="col" class="py-3 px-6">E-mail</th>
           <th scope="col" class="py-3 px-6">Área de Atuação</th>
           <th scope="col" class="py-3 px-6">Ações</th>
         </tr>
@@ -40,8 +39,7 @@
           (click)="selecionarInstrutor(instrutor)"
         >
           <td class="py-4 px-6">{{ instrutor.name }}</td>
-          <td class="py-4 px-6">{{ instrutor.email }}</td>
-          <td class="py-4 px-6">{{ instrutor.area }}</td>
+          <td class="py-4 px-6">{{ instrutor.area_name }}</td>
           <td class="py-4 px-6">
           
             <button
@@ -84,19 +82,13 @@
           [(ngModel)]="instrutorNome"
           placeholder="Nome"
         />
-        <input
-          type="email"
-          class="border border-gray-300 p-2 w-full rounded mt-4"
-          [(ngModel)]="instrutorEmail"
-          placeholder="E-mail"
-        />
-        <input
-          type="text"
-          class="border border-gray-300 p-2 w-full rounded mt-4"
-          [(ngModel)]="instrutorArea"
-          placeholder="Área de Atuação"
-        />
-      </div>
+        <select class="border border-gray-300 p-2 mt-2 w-full rounded" [(ngModel)]="instrutorAreaId">
+          
+          <option value="" selected>Selecione uma área</option>
+          <option [value]="area.id" *ngFor="let area of areas">
+            {{ area.name }}
+          </option>
+        </select>
       <div class="flex justify-center px-4 py-3">
         <button
           class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2 transition-colors duration-300"

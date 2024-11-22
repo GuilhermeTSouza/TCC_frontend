@@ -1,6 +1,6 @@
 export interface Instructor {
   id: number;
   name: string;
-  email: string;
-  area: string;
+  area_id: number;
+  area_name: string;
 }
